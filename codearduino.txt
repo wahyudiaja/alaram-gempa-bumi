@@ -1,0 +1,34 @@
+const int vibrationSensorPin = 2; // Vibration Sensor di hubungkan ke Pin 2
+int vibrationSensorState = 0; // Status saat pertama mulai = 0
+int indikatorHijau = 3; // Set Pin 3 untuk LED Hijau
+int indikatorMerah = 4; // Set Pin 4 untuk LED Merah
+int indikatorBuzzer = 5; // Set Pin 5 untuk Buzzer
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(vibrationSensorPin, INPUT); // Jadikan Vibration sensor sebagai input
+  pinMode(indikatorHijau, OUTPUT); // Jadikan indikatorHijau sebagai Output
+  pinMode(indikatorMerah, OUTPUT); // Jadiikan indikatorMerah sebagai Output
+  pinMode(indikatorBuzzer, OUTPUT); // Jadikan indikatorBuzzer sebagai Output
+}
+
+void loop() {
+  vibrationSensorState = digitalRead(vibrationSensorPin);
+  if (vibrationSensorState == HIGH) { // Jika ada getaran di sensor = HIGH
+    digitalWrite(indikatorHijau, HIGH); // Aktifkan indikator Hijau
+    digitalWrite(indikatorMerah, LOW); // Matikan indikator Merah
+    digitalWrite(indikatorBuzzer, HIGH); // // Aktifkan indikator Buzzer
+    Serial.println("Ada Pergetaran gan!");
+    delay(8000); // Tunda 8 detik
+    digitalWrite(indikatorHijau, LOW); // Matikan indikator Hijau
+    digitalWrite(indikatorMerah, HIGH); // Aktifkan indikator Merah
+    delay(100); // Delay untuk menunggu getaran selanjutnya
+  } 
+  else {
+    digitalWrite(indikatorHijau, LOW); // Matikan indikator Hijau
+    digitalWrite(indikatorMerah, HIGH); // Aktifkan indikator Merah
+    digitalWrite(indikatorBuzzer, LOW); // Matikan indikator Buzzer
+    Serial.println("Menunggu getaran...");
+    delay(1000);
+  }
+}
